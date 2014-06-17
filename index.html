@@ -14,8 +14,18 @@
 		</code>
 	</pre>
 	<script type="text/javascript">
-	// Create Database
+	// Create Database, idb points to IDBOpenDBRequest object
 	var idb = indexedDB.open('IDBTaskManager', 1);
+
+	// Call onupgradeneeded
+	idb.onupgradeneeded = function (event) {
+		//dbobject will reference Database Object
+		var dbobject = event.target.result;
+		if (event.oldVersion < 1) {
+			// Create our object store.
+			dbobject.createObjectStore('tasks',{autoIncrement: true});
+		}
+	};
 	</script>
 	<script src="prism.js"></script>
 </body>
